@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,27 +29,31 @@ public class PessoaResource {
     @Autowired
     private ApplicationEventPublisher publisher;
 
-    @GetMapping
-    public List<Pessoa> listar() {
-        return repository.findAll();
-    }
-
     @PostMapping
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> criar(@Valid @RequestBody Pessoa pessoa, HttpServletResponse response){
         Pessoa pessoaSalva = repository.save(pessoa);
         publisher.publishEvent(new RecursoCriadoEvent(this, response, pessoaSalva.getId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaSalva);
     }
 
+    @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
+    public List<Pessoa> listar() {
+        return repository.findAll();
+    }
+
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_PESQUISAR_PESSOA') and #oauth2.hasScope('read')")
     public ResponseEntity<?> buscarPeloId(@PathVariable  Long id) {
         return repository.findById(id)
                 .map(obj -> ResponseEntity.ok().body(obj))
                 .orElse(ResponseEntity.notFound().build());
     }
 
-//    Retorna apenas notFound()
+
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_REMOVER_PESSOA') and #oauth2.hasScope('write')")
     public ResponseEntity<?> remover(@PathVariable Long id) {
         return repository.findById(id)
             .map(obj -> {
@@ -58,6 +63,7 @@ public class PessoaResource {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> atualizar(@PathVariable Long id, @Valid @RequestBody Pessoa pessoa) {
         return repository.findById(id)
                 .map(obj -> {
@@ -70,6 +76,7 @@ public class PessoaResource {
     }
 
     @PutMapping("/{id}/ativo")
+    @PreAuthorize("hasAuthority('ROLE_CADASTRAR_PESSOA') and #oauth2.hasScope('write')")
     public ResponseEntity<Pessoa> atualizarPropriedadeAtivo (@PathVariable Long id, @RequestBody Boolean ativo){
         return repository.findById(id)
                 .map(obj -> {
