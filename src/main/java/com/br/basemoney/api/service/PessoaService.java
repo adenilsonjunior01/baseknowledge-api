@@ -27,7 +27,7 @@ public class PessoaService {
     public Pessoa buscarPessoaPeloId(Long id) {
         Optional<Pessoa> pessoaSalva = repository.findById(id);
 
-        if (!pessoaSalva.isEmpty()) {
+        if (!pessoaSalva.isPresent()) {
             throw new EmptyResultDataAccessException(1);
         }
 
