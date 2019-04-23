@@ -127,7 +127,6 @@
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
-
                     <forceJavacCompilerUse>true</forceJavacCompilerUse>
                 </configuration>
             </plugin>
