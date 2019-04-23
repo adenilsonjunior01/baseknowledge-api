@@ -1,21 +1,18 @@
 <plugin>
-    <dependency>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-    </dependency>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-compiler-plugin</artifactId>
+     <version>3.8.0</version>
 </plugin>
 
 <!-- Ou -->
 
 <plugin>
-    <dependency>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-        <executions>
-            <execution>default-compile</execution>
-            <phase>none</phase>
+     <groupId>org.apache.maven.plugins</groupId>
+     <artifactId>maven-compiler-plugin</artifactId>
+     <version>3.8.0</version>
+     <executions>
+        <execution>default-compile</execution>
+          <phase>none</phase>
         </executions>
-    </dependencyecution>default-compile</execution>
+    <execution>default-compile</execution>
 </plugin>
