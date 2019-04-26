@@ -3,7 +3,7 @@ package com.br.basemoney.api.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
+    import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -25,14 +25,13 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Lazy
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
 
     @Autowired
-   private UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -54,7 +53,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         resources.stateless(true);
     }
 
-    private PasswordEncoder passwordEncoder() {
+
+    public PasswordEncoder passwordEncoder() {
         return  new BCryptPasswordEncoder();
     }
 
