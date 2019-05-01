@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("basemoney")
 public class BaseMoneyApiProperty {
 
-    private String originPermitida = "http://localhost:8081";
+    private String originPermitida = "http://localhost:8080";
 
     private final Seguranca seguranca = new Seguranca();
 
