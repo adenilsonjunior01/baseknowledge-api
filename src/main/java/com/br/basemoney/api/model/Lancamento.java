@@ -26,6 +26,7 @@ public class Lancamento {
     @Column(name = "data_pagamento")
     private LocalDate dataPagamento;
 
+    @NotNull
     private BigDecimal valor;
 
     private String observacao;
